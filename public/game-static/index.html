@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Life of Duckie</title>
+
+  <!-- Favicon -->
+  <link rel="icon" href="./images/icon1.png" type="image/png">
+  <link rel="shortcut icon" href="./images/icon1.png" type="image/png">
+
+  <!-- Web App Manifest -->
+  <link rel="manifest" href="./manifest.json">
+
+  <!-- PWA Meta Tags -->
+  <meta name="theme-color" content="#007bff">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-touch-fullscreen" content="yes">
+  <link rel="apple-touch-icon" href="./images/icon1.png">
+  <link rel="apple-touch-startup-image" href="./images/icon1.png">
+
+  <!-- Viewport -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <!-- Open Graph Meta Tags -->
+  <meta property="og:title" content="Life of Duckie">
+  <meta property="og:description" content="A virtual pet game where you take care of Duckie!">
+  <meta property="og:image" content="https://soft-blini-84f353.netlify.app/images/opengraph-image.png">
+  <meta property="og:url" content="https://soft-blini-84f353.netlify.app/">
+  <meta property="og:type" content="website">
+
+  <!-- Farcaster Frame Meta Tags -->
+  <meta property="fc:frame" content="vNext">
+  <meta property="fc:frame:image" content="https://soft-blini-84f353.netlify.app/images/opengraph-image.png">
+  <meta property="fc:frame:image:aspect_ratio" content="1.91:1">
+  <meta property="fc:frame:button:1" content="Feed Duck 🥖">
+  <meta property="fc:frame:button:2" content="Workout Duck 💪">
+  <meta property="fc:frame:button:3" content="View Stats 📊">
+  <meta property="fc:frame:button:4" content="Play Life of Duckie 🦆">
+  <meta property="fc:frame:button:4:action" content="post">
+  <meta property="fc:frame:button:4:target" content="https://bg-minikit-m6e6.vercel.app/game">
+  <meta property="fc:frame:post_url" content="https://bg-minikit-m6e6.vercel.app/api/frame-action">
+
+  <!-- Farcaster Mini App Meta Tags -->
+  <meta property="fc:frame:input:text" content="Enter your duck name">
+  <meta property="fc:frame:state" content="initial">
+  <meta property="fc:frame:type" content="mini-app">
+
+  <!-- Farcaster Frame Manifest -->
+  <link rel="farcaster" href="./.well-known/farcaster.json">
+
+  <!-- Preload Audio -->
+  <link rel="preload" href="./audio/musicgame.mp3" as="audio" type="audio/mpeg" crossorigin>
+  <audio id="background-music" src="./audio/musicgame.mp3" loop preload="auto"></audio>
+
+  <!-- Styles and Fonts -->
+  <link rel="stylesheet" href="./styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+  <!-- Farcaster SDK -->
+  <script src="./farcaster-sdk.js"></script>
+</head>
+<body>
+  <div id="game-container" data-testid="game-container">
+    <div id="notification-center" data-testid="notification-center"></div>
+    <div class="sidebar">
+      <button class="icon-button active" data-tab="main-tab" aria-label="Main tab" data-testid="main-tab-btn">🦆</button>
+      <button class="icon-button" data-tab="shop-tab" aria-label="Shop tab" data-testid="shop-tab-btn">🛒</button>
+      <button class="icon-button" data-tab="tasks-tab" aria-label="Tasks tab" data-testid="tasks-tab-btn">🏆</button>
+      <button class="icon-button" data-tab="garden-tab" aria-label="Garden tab" data-testid="garden-tab-btn">🌱</button>
+      <button id="help-button" class="icon-button" aria-label="Help" data-testid="help-btn">❓</button>
+      <button id="mute-button" class="icon-button" aria-label="Mute sound" data-testid="mute-btn">🔊</button>
+      <button id="theme-button" class="icon-button" aria-label="Toggle theme" data-testid="theme-btn">🌙</button>
+    </div>
+
+    <div id="main-tab" class="tab active" data-testid="main-tab">
+      <div class="stats-bar" data-testid="stats-bar">
+        <div class="stat-item"><span class="icon" aria-hidden="true">🦆</span> Stage: <span id="stage-display">Baby</span></div>
+        <div class="stat-item"><span class="icon" aria-hidden="true">📈</span> Level: <span id="level-display">1</span></div>
+        <div class="stat-item"><span class="icon" aria-hidden="true">🪙</span> <span id="coins-display">200</span></div>
+        <div class="stat-item"><span class="icon" aria-hidden="true">💎</span> <span id="gems-display">0</span></div>
+        <div class="stat-item"><span class="icon" aria-hidden="true">💀</span> Deaths: <span id="deaths-display">0</span></div>
+      </div>
+      <div class="progress-bar" data-testid="xp-bar">
+        <div class="bar-container">
+          <div class="bar-fill xp-fill" id="xp-bar-fill">
+            <span class="bar-label">XP: <span id="xp-display">0</span>/<span id="xp-needed">150</span></span>
+          </div>
+        </div>
+      </div>
+      <div class="progress-bar" data-testid="energy-bar">
+        <div class="bar-container">
+          <div class="bar-fill energy-fill" id="energy-bar-fill">
+            <span class="bar-label">Energy: <span id="energy-display">100</span> <span id="energy-timer" class="timer"></span></span>
+          </div>
+        </div>
+      </div>
+      <img id="duck-image" src="images/normal/hungry.png" alt="Duck in hungry state" data-testid="duck-image">
+      <div class="action-buttons" data-testid="action-buttons">
+        <button id="feed-button" aria-label="Feed duck">Feed 🥖</button>
+        <button id="fitness-button" aria-label="Workout duck" disabled>Workout 💪</button>
+        <button id="minigames-button" aria-label="Open minigames">Mini-games 🎲</button>
+        <button id="revive-button" aria-label="Revive duck" disabled>Revive Free (3)</button>
+        <button id="buy-duck-button" aria-label="Buy new duck" style="display: none;">New Duck (75 🪙)</button>
+      </div>
+    </div>
+
+    <div id="shop-tab" class="tab" data-testid="shop-tab">
+      <button class="back-button" aria-label="Back to main">Back ⬅</button>
+      <div class="submenu">
+        <button class="submenu-button active" data-subtab="coin-upgrades" aria-label="Coin upgrades" data-testid="coin-upgrades-btn">Coins 🪙</button>
+        <button class="submenu-button" data-subtab="gems-skins" aria-label="Gems and skins" data-testid="gems-skins-btn">Gems 💎</button>
+      </div>
+      <div id="coin-upgrades-content" class="shop-content active" data-testid="coin-upgrades-content"></div>
+      <div id="gems-skins-content" class="shop-content" data-testid="gems-skins-content"></div>
+    </div>
+
+    <div id="tasks-tab" class="tab" data-testid="tasks-tab">
+      <button class="back-button" aria-label="Back to main">Back ⬅</button>
+      <div class="submenu">
+        <button class="submenu-button active" data-subtab="achievements" aria-label="Achievements" data-testid="achievements-btn">Achievements 🏆</button>
+        <button class="submenu-button" data-subtab="quests" aria-label="Quests" data-testid="quests-btn">Quests 📜</button>
+      </div>
+      <div id="achievements-content" class="tasks-content active" data-testid="achievements-content"></div>
+      <div id="quests-content" class="tasks-content" data-testid="quests-content"></div>
+    </div>
+
+    <div id="garden-tab" class="tab" data-testid="garden-tab">
+      <button class="back-button" aria-label="Back to main">Back ⬅</button>
+      <div class="plant-buttons" data-testid="plant-buttons">
+        <button class="plant-button" data-plant="bread-flower" aria-label="Plant Bread Flower">Plant Bread Flower (20 🪙)</button>
+        <button class="plant-button" data-plant="coin-bush" aria-label="Plant Coin Bush">Plant Coin Bush (75 🪙)</button>
+        <button class="plant-button" data-plant="star-fruit" aria-label="Plant Star Fruit">Plant Star Fruit (50 🪙)</button>
+        <button class="plant-button" data-plant="gem-vine" aria-label="Plant Gem Vine">Plant Gem Vine (150 🪙)</button>
+      </div>
+      <div id="garden-status" class="garden-status" data-testid="garden-status">
+        <div class="garden-grid"></div>
+      </div>
+    </div>
+
+    <div id="minigames-menu" data-testid="minigames-menu">
+      <button id="close-minigames" aria-label="Close minigames menu" data-testid="close-minigames-btn">✖</button>
+      <h2>Mini-games</h2>
+      <button id="hide-button" aria-label="Find coin minigame">Find Coin 🌳</button>
+      <button id="fishing-button" aria-label="Fishing minigame">Fishing 🎣</button>
+      <button id="treasure-map-button" aria-label="Treasure map minigame">Treasure Map 🗺️</button>
+    </div>
+
+    <div id="hide-game-box" data-testid="hide-game-box"></div>
+    <div id="fishing-game-box" data-testid="fishing-game-box"></div>
+    <div id="treasure-map-box" data-testid="treasure-map-box"></div>
+
+    <div id="modal" data-testid="modal">
+      <div id="modal-content" data-testid="modal-content"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="game.js"></script>
+  <script src="farcaster-integration.js"></script>
+  <script>
+    // Service Worker Registration
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => console.log('Service worker registered'))
+        .catch(err => console.error('Service worker registration failed:', err));
+    }
+
+    // Farcaster SDK Initialization
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Farcaster integration
+      if (window.farcasterIntegration) {
+        window.farcasterIntegration.initFarcasterIntegration();
+      }
+
+      // Check if game is loaded
+      const checkGameLoaded = setInterval(() => {
+        if (window.game && document.getElementById('duck-image')) {
+          clearInterval(checkGameLoaded);
+          console.log('Game loaded, notifying Farcaster');
+          if (window.farcasterSDK) {
+            window.farcasterSDK.notifyReady();
+          }
+        }
+      }, 100);
+
+      // Fallback timeout for Farcaster ready notification
+      setTimeout(() => {
+        if (window.farcasterSDK) {
+          window.farcasterSDK.notifyReady();
+          console.log('Backup ready call after timeout');
+        }
+      }, 3000);
+    });
+  </script>
+</body>
+</html>

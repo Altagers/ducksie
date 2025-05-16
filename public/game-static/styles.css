@@ -1,0 +1,1703 @@
+/* Reset and base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #f0f4f8, #d9e2ec);
+  color: #333;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  margin: 0;
+  transition: background 0.3s, color 0.3s;
+}
+
+body.dark-theme {
+  background: linear-gradient(135deg, #2c3e50, #1a252f);
+  color: #e0e0e0;
+}
+
+/* Game container */
+#game-container {
+  width: 1200px;
+  height: 630px;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.dark-theme #game-container {
+  background: #34495e;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+/* Sidebar */
+.sidebar {
+  width: 80px;
+  background: #f7f9fc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  border-right: 1px solid #e0e0e0;
+}
+
+.dark-theme .sidebar {
+  background: #2c3e50;
+  border-right: 1px solid #4a6076;
+}
+
+.icon-button {
+  width: 50px;
+  height: 50px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  margin: 10px 0;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.icon-button:hover {
+  background: #e0e0e0;
+  transform: scale(1.1);
+}
+
+.dark-theme .icon-button:hover {
+  background: #4a6076;
+}
+
+.icon-button.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.icon-button:focus {
+  outline: 2px solid #007bff;
+  outline-offset: 2px;
+}
+
+/* Tabs */
+.tab {
+  flex: 1;
+  padding: 20px;
+  display: none;
+}
+
+.tab.active {
+  display: block;
+}
+
+/* Main tab */
+.stats-bar {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.stat-item {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: 600;
+  background: #f7f9fc;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.dark-theme .stat-item {
+  background: #2c3e50;
+}
+
+.stat-item .icon {
+  margin-right: 8px;
+}
+
+.progress-bar {
+  margin-bottom: 15px;
+  width: 100%;
+}
+
+.bar-container {
+  width: 100%;
+  height: 20px;
+  background: #e0e0e0;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.dark-theme .bar-container {
+  background: #4a6076;
+}
+
+.bar-fill {
+  height: 100%;
+  border-radius: 10px;
+  transition: width 0.5s ease-in-out;
+  position: relative;
+  overflow: hidden;
+}
+
+.xp-fill {
+  background: linear-gradient(90deg, #007bff, #00c4ff);
+}
+
+.energy-fill {
+  background: linear-gradient(90deg, #28a745, #4caf50);
+}
+
+.bar-fill::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent);
+  opacity: 0;
+  animation: glow 2s infinite;
+}
+
+.bar-label {
+  position: absolute;
+  top: 50%;
+  left: 10px;
+  transform: translateY(-50%);
+  font-size: 12px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+}
+
+@keyframes glow {
+  0% { opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { opacity: 0; }
+}
+
+#duck-image {
+  display: block;
+  margin: 20px auto;
+  max-width: 300px;
+  height: auto;
+  transition: transform 0.2s;
+}
+
+#duck-image.hungry {
+  transform: scale(0.95);
+}
+
+#duck-image.overfed {
+  transform: scale(1.05);
+}
+
+#duck-image.dead {
+  filter: grayscale(100%);
+}
+
+#duck-image.fitness {
+  animation: bounce 0.5s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.action-buttons button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.action-buttons button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dark-theme .action-buttons button {
+  background: #1e90ff;
+}
+
+.dark-theme .action-buttons button:hover {
+  background: #0066cc;
+}
+
+.dark-theme .action-buttons button:disabled {
+  background: #5a6a7a;
+}
+
+/* Shop tab */
+.back-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #6c757d;
+  color: #fff;
+  margin-bottom: 15px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.back-button:hover {
+  background: #5a6268;
+  transform: scale(1.05);
+}
+
+.dark-theme .back-button {
+  background: #4a6076;
+}
+
+.dark-theme .back-button:hover {
+  background: #5a6a7a;
+}
+
+.submenu {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+.shop-content::-webkit-scrollbar,
+.tasks-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.shop-content::-webkit-scrollbar-track,
+.tasks-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 10px;
+}
+
+.shop-content::-webkit-scrollbar-thumb,
+.tasks-content::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.dark-theme .shop-content::-webkit-scrollbar-track,
+.dark-theme .tasks-content::-webkit-scrollbar-track {
+  background: #2c3e50;
+}
+
+.dark-theme .shop-content::-webkit-scrollbar-thumb,
+.dark-theme .tasks-content::-webkit-scrollbar-thumb {
+  background: #4a6076;
+}
+
+.submenu-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #e0e0e0;
+  color: #333;
+  transition: background 0.2s, color 0.2s;
+}
+
+.submenu-button:hover {
+  background: #d0d0d0;
+}
+
+.submenu-button.active {
+  background: #007bff;
+  color: #fff;
+}
+
+.dark-theme .submenu-button {
+  background: #4a6076;
+  color: #e0e0e0;
+}
+
+.dark-theme .submenu-button:hover {
+  background: #5a6a7a;
+}
+
+.dark-theme .submenu-button.active {
+  background: #1e90ff;
+}
+
+.shop-content, .tasks-content {
+  max-height: 450px;
+  overflow-y: auto;
+  padding-right: 10px;
+  display: none
+}
+
+.shop-content.active {
+  display: block;
+}
+
+.shop-stats {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.shop-stats .stat-item {
+  font-size: 16px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 10px;
+}
+
+.can-buy, .unavailable, .purchased {
+  background: #f7f9fc;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.dark-theme .can-buy, .dark-theme .unavailable, .dark-theme .purchased {
+  background: #2c3e50;
+}
+
+.unavailable {
+  opacity: 0.6;
+}
+
+.purchased {
+  background: #d4edda;
+}
+
+.dark-theme .purchased {
+  background: #2e7d32;
+}
+
+.item-text {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.item-description {
+  font-size: 14px;
+  color: #666;
+}
+
+.dark-theme .item-description {
+  color: #b0b0b0;
+}
+
+.shop-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #28a745;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.shop-button:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+.shop-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dark-theme .shop-button {
+  background: #2e7d32;
+}
+
+.dark-theme .shop-button:hover {
+  background: #1b5e20;
+}
+
+.dark-theme .shop-button:disabled {
+  background: #5a6a7a;
+}
+
+/* Tasks tab */
+.tasks-content {
+  display: none;
+}
+
+.tasks-content.active {
+  display: block;
+}
+
+.completed, .can-claim, .incomplete {
+  background: #f7f9fc;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 10px;
+}
+
+.dark-theme .completed, .dark-theme .can-claim, .dark-theme .incomplete {
+  background: #2c3e50;
+}
+
+.completed {
+  background: #d4edda;
+}
+
+.dark-theme .completed {
+  background: #2e7d32;
+}
+
+.can-claim {
+  border: 2px solid #007bff;
+}
+
+.dark-theme .can-claim {
+  border-color: #1e90ff;
+}
+
+.incomplete {
+  opacity: 0.7;
+}
+
+.claim-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.claim-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.dark-theme .claim-button {
+  background: #1e90ff;
+}
+
+.dark-theme .claim-button:hover {
+  background: #0066cc;
+}
+
+/* ... (предыдущие стили до садовой секции остаются без изменений) */
+
+/* Garden tab */
+.plant-buttons {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+  flex-wrap: wrap;
+}
+
+.plant-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #28a745;
+  color: #fff;
+  text-align: left;
+  transition: background 0.2s, transform 0.2s;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-width: 200px;
+}
+
+.plant-button:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+.plant-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dark-theme .plant-button {
+  background: #2e7d32;
+}
+
+.dark-theme .plant-button:hover {
+  background: #1b5e20;
+}
+
+.dark-theme .plant-button:disabled {
+  background: #5a6a7a;
+}
+
+.plant-button-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.plant-button-description {
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+.plant-button-rewards {
+  font-size: 12px;
+  color: #e0e0e0;
+  margin-top: 5px;
+}
+
+.dark-theme .plant-button-description,
+.dark-theme .plant-button-rewards {
+  color: #b0b0b0;
+}
+
+.garden-status {
+  margin-top: 20px;
+}
+
+.garden-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 15px;
+}
+
+.garden-slot {
+  background: #f7f9fc;
+  padding: 15px;
+  border-radius: 10px;
+  border: 2px solid #e0e0e0;
+  transition: border-color 0.2s;
+}
+
+.garden-slot:hover {
+  border-color: #007bff;
+}
+
+.dark-theme .garden-slot {
+  background: #2c3e50;
+  border-color: #4a6076;
+}
+
+.dark-theme .garden-slot:hover {
+  border-color: #1e90ff;
+}
+
+.plant-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plant-item.empty {
+  text-align: center;
+  color: #666;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.dark-theme .plant-item.empty {
+  color: #b0b0b0;
+}
+
+.plant-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.plant-icon {
+  font-size: 24px;
+}
+
+.plant-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.plant-time {
+  font-size: 14px;
+  color: #666;
+}
+
+.plant-rewards {
+  font-size: 12px;
+  color: #666;
+}
+
+.dark-theme .plant-time,
+.dark-theme .plant-rewards {
+  color: #b0b0b0;
+}
+
+.plant-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.plant-action-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.plant-action-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.plant-action-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dark-theme .plant-action-button {
+  background: #1e90ff;
+}
+
+.dark-theme .plant-action-button:hover {
+  background: #0066cc;
+}
+
+.dark-theme .plant-action-button:disabled {
+  background: #5a6a7a;
+}
+
+/* ... (остальные стили остаются без изменений) */
+
+.plant-button-title {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.plant-button-description {
+  font-size: 12px;
+  color: #e0e0e0;
+}
+
+.dark-theme .plant-button-description {
+  color: #b0b0b0;
+}
+
+.garden-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.garden-slot {
+  background: #f7f9fc;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.dark-theme .garden-slot {
+  background: #2c3e50;
+}
+
+.plant-item {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.plant-item.empty {
+  text-align: center;
+  color: #666;
+}
+
+.dark-theme .plant-item.empty {
+  color: #b0b0b0;
+}
+
+.plant-status {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.plant-icon {
+  font-size: 24px;
+}
+
+.plant-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.plant-time {
+  font-size: 14px;
+  color: #666;
+}
+
+.dark-theme .plant-time {
+  color: #b0b0b0;
+}
+
+.plant-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.plant-action-button {
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.plant-action-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.plant-action-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dark-theme .plant-action-button {
+  background: #1e90ff;
+}
+
+.dark-theme .plant-action-button:hover {
+  background: #0066cc;
+}
+
+.dark-theme .plant-action-button:disabled {
+  background: #5a6a7a;
+}
+
+/* Minigames menu */
+#minigames-menu {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  z-index: 10;
+}
+
+#minigames-menu h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+#minigames-menu button {
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  margin: 10px;
+  transition: background 0.2s, transform 0.2s;
+}
+
+#minigames-menu button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+#minigames-menu button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+#close-minigames {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #dc3545;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+}
+
+#close-minigames:hover {
+  background: #c82333;
+}
+
+/* Find coin minigame */
+#hide-game-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  z-index: 15;
+}
+
+#hide-game-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.coin-game-container {
+  width: 100%;
+  max-width: 600px;
+  height: 300px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.coin-game-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('images/forest-bg.jpg') center/cover no-repeat;
+  filter: brightness(0.8);
+}
+
+.bush-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  padding: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.bush {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.bush:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.bush.found {
+  background: #28a745;
+}
+
+.bush.empty {
+  background: #dc3545;
+}
+
+.game-box-close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: #dc3545;
+  width: 40px;
+  height: 40px;
+  font-size: 20px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.game-box-close:hover {
+  background: #c82333;
+}
+
+/* Fishing minigame */
+#fishing-game-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  z-index: 15;
+}
+
+#fishing-game-box h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+#fishing-game-box p {
+  font-size: 16px;
+  margin-bottom: 20px;
+}
+
+.fishing-game-container {
+  width: 100%;
+  max-width: 600px;
+  height: 200px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.fishing-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('images/water-bg.jpg') center/cover no-repeat;
+  filter: brightness(0.8);
+}
+
+.fishing-lane {
+  width: 100%;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.5);
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.catch-zone {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  height: 100%;
+  background: rgba(40, 167, 69, 0.5);
+  transform: translateX(-50%);
+  transition: background 0.3s;
+}
+
+.catch-zone.success {
+  background: #28a745;
+}
+
+.catch-zone.failure {
+  background: #dc3545;
+}
+
+.fish-item {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  font-size: 32px;
+  transform: translateY(-50%);
+}
+
+.fishing-info {
+  font-size: 14px;
+  margin: 10px 0;
+}
+
+.fishing-buttons {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.fishing-button {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #007bff;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.fishing-button:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+.fishing-button.secondary {
+  background: #6c757d;
+}
+
+.fishing-button.secondary:hover {
+  background: #5a6268;
+}
+
+@keyframes swim {
+  0% { left: 0; }
+  100% { left: 100%; }
+}
+/* Treasure map minigame */
+#treasure-map-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  color: #fff;
+  z-index: 15;
+}
+
+#treasure-map-box h2 {
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.treasure-map-container {
+  width: 100%;
+  max-width: 400px;
+  height: 400px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.treasure-map-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url('images/map-bg.jpg') center/cover no-repeat;
+  filter: brightness(0.8);
+}
+
+.treasure-map-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 5px;
+  padding: 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.treasure-cell {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.treasure-cell:hover {
+  background: rgba(0, 0, 0, 0.7);
+}
+
+.treasure-cell.revealed {
+  pointer-events: none;
+}
+
+#upgrade-map-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #28a745;
+  color: #fff;
+  transition: background 0.2s, transform 0.2s;
+}
+
+#upgrade-map-button:hover {
+  background: #218838;
+  transform: scale(1.05);
+}
+
+#upgrade-map-button:disabled {
+  background: #ccc;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Modal */
+#modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 20;
+}
+
+#modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  max-width: 500px;
+  text-align: center;
+}
+
+.dark-theme #modal-content {
+  background: #34495e;
+  color: #e0e0e0;
+}
+
+#modal-text {
+  font-size: 18px;
+  margin-bottom: 20px;
+  white-space: pre-line;
+}
+
+.modal-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+#modal-option1, #modal-option2, #modal-next, #modal-done, #modal-skip {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+#modal-option1, #modal-next, #modal-done {
+  background: #007bff;
+  color: #fff;
+}
+
+#modal-option1:hover, #modal-next:hover, #modal-done:hover {
+  background: #0056b3;
+  transform: scale(1.05);
+}
+
+#modal-option2, #modal-skip {
+  background: #6c757d;
+  color: #fff;
+}
+
+#modal-option2:hover, #modal-skip:hover {
+  background: #5a6268;
+  transform: scale(1.05);
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-in;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: scale(1); }
+  to { opacity: 0; transform: scale(0.95); }
+}
+
+/* Notifications */
+#notification-center {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  z-index: 25;
+}
+
+.notification-item {
+  background: #007bff;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 14px;
+  font-weight: 600;
+  animation: slideIn 0.3s ease-in;
+}
+
+.dark-theme .notification-item {
+  background: #1e90ff;
+}
+
+.notification-item.fade-out {
+  animation: slideOut 0.3s ease-out forwards;
+}
+
+@keyframes slideIn {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+@keyframes slideOut {
+  from { transform: translateX(0); opacity: 1; }
+  to { transform: translateX(100%); opacity: 0; }
+}
+
+/* Coin animation */
+.coin-animation {
+  position: absolute;
+  font-size: 24px;
+  animation: coinRise 1s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes coinRise {
+  0% { opacity: 1; transform: translateY(0); }
+  100% { opacity: 0; transform: translateY(-100px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 1200px) {
+  #game-container {
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1.91 / 1;
+  }
+}
+
+@media (max-width: 600px) {
+  .sidebar {
+    width: 60px;
+    padding: 10px 0;
+  }
+
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin: 5px 0;
+  }
+
+  .tab {
+    padding: 10px;
+  }
+
+  .stats-bar {
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .stat-item {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .submenu {
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .submenu-button {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .plant-buttons {
+    flex-direction: column;
+  }
+
+  .plant-button {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  .garden-grid {
+    grid-template-columns: 1fr;
+  }
+
+  #modal-content {
+    width: 90%;
+    padding: 15px;
+  }
+
+  #modal-text {
+    font-size: 16px;
+  }
+
+  .modal-buttons {
+    flex-direction: column;
+  }
+
+  #modal-option1, #modal-option2, #modal-next, #modal-done, #modal-skip {
+    width: 100%;
+    padding: 8px;
+    font-size: 14px;
+  }
+
+  #minigames-menu button {
+    width: 80%;
+    padding: 10px;
+    font-size: 14px;
+  }
+
+  .coin-game-container, .fishing-game-container, .treasure-map-container {
+    height: 200px;
+  }
+
+  .bush {
+    font-size: 32px;
+  }
+
+  .treasure-cell {
+    font-size: 24px;
+  }
+  /* ... existing code ... */
+
+.timer {
+  font-size: 11px;
+  opacity: 0.9;
+  margin-left: 5px;
+  background: rgba(0, 0, 0, 0.2);
+  padding: 2px 5px;
+  border-radius: 10px;
+}
+
+.dark-theme .timer {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+}
+/* Мобильная оптимизация */
+@media (max-width: 768px) {
+  #game-container {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    border-radius: 0;
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px 0;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .dark-theme .sidebar {
+    border-bottom: 1px solid #4a6076;
+  }
+  
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin: 0 5px;
+  }
+  
+  .tab {
+    padding: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
+  }
+  
+  .stats-bar {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .stat-item {
+    flex: 1 0 45%;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+  
+  #duck-image {
+    max-width: 150px;
+  }
+  
+  .action-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .action-buttons button {
+    flex: 1 0 45%;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .shop-item, .achievement-item, .quest-item, .plant-item {
+    flex: 1 0 100%;
+  }
+  
+  .garden-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .stat-item {
+    flex: 1 0 100%;
+  }
+  
+  .action-buttons button {
+    flex: 1 0 100%;
+  }
+  
+  .garden-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .submenu {
+    flex-direction: column;
+  }
+  
+  .submenu-button {
+    margin: 5px 0;
+  }
+}
+
+
+.touch-active {
+  transform: scale(0.95) !important;
+}
+
+
+@media (hover: none) {
+  .icon-button:hover, 
+  .action-buttons button:hover,
+  .shop-item:hover,
+  .plant-button:hover {
+    transform: none;
+  }
+}
+
+@media (max-width: 768px) {
+  #game-container {
+    width: 100%;
+    height: auto;
+    min-height: 100vh;
+    border-radius: 0;
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+    height: 60px;
+    flex-direction: row;
+    justify-content: space-around;
+    padding: 5px 0;
+    border-right: none;
+    border-bottom: 1px solid #e0e0e0;
+  }
+  
+  .dark-theme .sidebar {
+    border-bottom: 1px solid #4a6076;
+  }
+  
+  .icon-button {
+    width: 40px;
+    height: 40px;
+    font-size: 20px;
+    margin: 0 5px;
+  }
+  
+  .tab {
+    padding: 15px;
+    overflow-y: auto;
+    max-height: calc(100vh - 60px);
+  }
+  
+  .stats-bar {
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+  
+  .stat-item {
+    flex: 1 0 45%;
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+  
+  #duck-image {
+    max-width: 150px;
+  }
+  
+  .action-buttons {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .action-buttons button {
+    flex: 1 0 45%;
+    padding: 10px;
+    font-size: 14px;
+  }
+  
+  .shop-item, .achievement-item, .quest-item, .plant-item {
+    flex: 1 0 100%;
+  }
+  
+  .garden-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+}
+
+
+@media (max-width: 480px) {
+  .stat-item {
+    flex: 1 0 100%;
+  }
+  
+  .action-buttons button {
+    flex: 1 0 100%;
+  }
+  
+  .garden-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .submenu {
+    flex-direction: column;
+  }
+  
+  .submenu-button {
+    margin: 5px 0;
+  }
+}
+
+
+.touch-active {
+  transform: scale(0.95) !important;
+}
+
+
+@media (hover: none) {
+  .icon-button:hover, 
+  .action-buttons button:hover,
+  .shop-item:hover,
+  .plant-button:hover {
+    transform: none;
+  }
+}
+/* Login form styles */
+.login-input-container {
+  margin: 15px 0;
+  width: 100%;
+}
+
+.login-input-container input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #fff;
+  color: #333;
+}
+
+.dark-theme .login-input-container input {
+  background: #2c3e50;
+  border-color: #4a6076;
+  color: #e0e0e0;
+}
+
+#login-button {
+  background: #007bff;
+  color: white;
+}
+
+#login-button:hover {
+  background: #0056b3;
+}
+
+#cancel-button {
+  background: #6c757d;
+  color: white;
+}
+
+#cancel-button:hover {
+  background: #5a6268;
+}
